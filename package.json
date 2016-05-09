@@ -2,7 +2,7 @@
   "name": "node-tutorial",
   "version": "1.0.0",
   "description": "Trying to understand how node works",
-  "main": "main.js",
+  "main": "server.js",
   "dependencies": {
     "body-parser": "^1.15.1",
     "cookie-parser": "^1.4.1",
