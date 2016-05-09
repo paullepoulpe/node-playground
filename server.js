@@ -4,22 +4,14 @@ var fs = require("fs");
 var app = express();
 app.use(express.static('public'));
 
+var usersFile = __dirname + "/data/" + "users.json";
 
 app.get('/listUsers', function (req, res) {
-    fs.readFile(__dirname + "/" + "users.json", 'utf8', function (err, data) {
+    fs.readFile(usersFile, 'utf8', function (err, data) {
         console.log(data);
         res.end(data);
     });
 });
-
-var user = {
-    "user4": {
-        "name": "mohit",
-        "password": "password4",
-        "profession": "teacher",
-        "id": 4
-    }
-};
 
 app.get('/addUser', function (req, res) {
 
@@ -30,7 +22,7 @@ app.get('/addUser', function (req, res) {
     };
 
     // First read existing users.
-    fs.readFile(__dirname + "/" + "users.json", 'utf8', function (err, data) {
+    fs.readFile(usersFile, 'utf8', function (err, data) {
         data = JSON.parse(data);
         var id = 1;
         while (data.hasOwnProperty("user" + id)) {
@@ -41,7 +33,7 @@ app.get('/addUser', function (req, res) {
 
         data["user" + id] = user;
 
-        fs.writeFile(__dirname + "/" + "users.json", JSON.stringify(data), 'utf8', function (err) {
+        fs.writeFile(usersFile, JSON.stringify(data), 'utf8', function (err) {
             if (err) {
                 console.log(err);
                 res.end('Error : ' + err);
@@ -57,12 +49,12 @@ app.get('/addUser', function (req, res) {
 app.get('/deleteUser', function (req, res) {
 
     // First read existing users.
-    fs.readFile(__dirname + "/" + "users.json", 'utf8', function (err, data) {
+    fs.readFile(usersFile, 'utf8', function (err, data) {
         data = JSON.parse(data);
 
         delete data["user" + 2];
 
-        fs.writeFile(__dirname + "/" + "users.json", JSON.stringify(data), 'utf8', function (err) {
+        fs.writeFile(usersFile, JSON.stringify(data), 'utf8', function (err) {
             if (err) {
                 console.log(err);
                 res.end('Error : ' + err);
@@ -78,7 +70,7 @@ app.get('/deleteUser', function (req, res) {
 
 app.get('/:id', function (req, res) {
     // First read existing users.
-    fs.readFile(__dirname + "/" + "users.json", 'utf8', function (err, data) {
+    fs.readFile(usersFile, 'utf8', function (err, data) {
         users = JSON.parse(data);
         var user = users["user" + req.params.id];
         console.log(user);
